@@ -335,9 +335,9 @@ function parseCSVToObjects(csvText) {
             const row = {};
             headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
             let duracionHoras = 0;
-            if (row['âŒ›H. Fin'] && row['â ³H. inicio'] && row['â ³H. inicio'] !== 'â ³H. inicio') {
+            if (row['âŒ›H. Fin'] && row['â�³H. inicio'] && row['â�³H. inicio'] !== 'â�³H. inicio') {
                 try {
-                    const startTime = row['â ³H. inicio'].split(':');
+                    const startTime = row['â�³H. inicio'].split(':');
                     const endTime = row['âŒ›H. Fin'].split(':');
                     if (startTime.length >= 2 && endTime.length >= 2) {
                         let startMin = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
@@ -361,7 +361,7 @@ function parseCSVToObjects(csvText) {
                 equipo: row['ðŸšœEquipo'] || 'N/E',
                 fecha: row['ðŸ“…Fecha'] || '',
                 turno: row['ðŸ‘¥Turno'] || '',
-                horaInicio: row['â ³H. inicio'] || '',
+                horaInicio: row['â�³H. inicio'] || '',
                 horaFin: row['âŒ›H. Fin'] || '',
                 codigoTrabajo: row['ðŸ”¢Detalle_Codigo_Completo'] || '',
                 tipoTrabajo: extraerTipoTrabajo(row['ðŸ”¢Detalle_Codigo_Completo'] || ''),
