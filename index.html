@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Minerar - Panel de Mantenimiento | Filtros Avanzados y Alertas</title>
+    <title>Minerar - Panel de Mantenimiento | Dashboard Interactivo</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -36,111 +36,96 @@
             border-radius: 20px;
             border: 1px solid rgba(0, 255, 136, 0.2);
             box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-            transition: all 0.2s ease;
             position: relative;
             z-index: 2;
         }
-        .glass-card:hover { border-color: #00ff88; transform: translateY(-2px); }
-        .header-container {
-            background: rgba(8,12,20,0.9);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(192,132,252,0.4);
-            padding: 16px 24px;
-            margin-bottom: 24px;
-        }
-        .kpi-card { border-left: 4px solid #00ff88; background: linear-gradient(115deg, rgba(0,255,136,0.08), rgba(0,255,136,0.02)); }
-        .stat-card {
-            background: rgba(15,20,30,0.6);
-            border-radius: 16px;
-            padding: 12px;
-            text-align: center;
-            border: 1px solid rgba(0,255,136,0.2);
-            transition: all 0.2s;
-        }
-        .stat-card:hover { border-color: #00ff88; background: rgba(0,255,136,0.05); }
-        .filter-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
-        .filter-group select, .filter-group input { background: #0f1520; border: 1px solid #00ff88; border-radius: 10px; padding: 8px 12px; color: #e2e8f0; font-size: 12px; }
-        .filter-group select { min-width: 130px; }
-        .filter-group input { flex: 1; min-width: 200px; }
-        .btn-filter {
-            transition: all 0.2s;
+        .btn-primary {
+            background: linear-gradient(95deg, #00ff88, #00cc66);
+            border: none;
+            color: #05050a;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 12px;
             cursor: pointer;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 8px 12px;
-            border-radius: 10px;
-            text-align: center;
-            border: 1px solid rgba(100,100,150,0.4);
-            background: rgba(20,25,35,0.7);
-        }
-        .btn-filter.active { background: linear-gradient(95deg, #00ff88, #00cc66); border-color: #00ff88; color: #05050a; }
-        .category-card {
             transition: all 0.2s;
+        }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(0,255,136,0.4); }
+        .btn-secondary { background: #1e293b; border: 1px solid #475569; color: #cbd5e1; padding: 10px 20px; border-radius: 12px; cursor: pointer; }
+        .btn-secondary:hover { background: #334155; }
+        .filter-group { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; align-items: flex-end; }
+        .filter-group select, .filter-group input { background: #0f1520; border: 1px solid #00ff88; border-radius: 10px; padding: 10px 12px; color: #e2e8f0; font-size: 12px; }
+        .filter-group select { min-width: 130px; }
+        .stat-card { background: rgba(15,20,30,0.6); border-radius: 16px; padding: 12px; text-align: center; border: 1px solid rgba(0,255,136,0.2); }
+        .equipo-seleccionado { background: linear-gradient(95deg, rgba(0,255,136,0.2), rgba(0,255,136,0.05)); border: 2px solid #00ff88; }
+        .category-card {
             cursor: pointer;
             border: 2px solid #2a2a3a;
             border-radius: 14px;
             padding: 12px;
             text-align: center;
             background: rgba(15,20,30,0.7);
-            position: relative;
+            transition: all 0.2s;
         }
         .category-card:hover { transform: scale(1.03); border-color: #00ff88; background: rgba(0,255,136,0.1); }
-        .category-card.active {
-            box-shadow: 0 0 0 3px rgba(0,255,136,0.4);
-            background: rgba(0,255,136,0.15);
-            border-color: #00ff88 !important;
-        }
+        .category-card.active { box-shadow: 0 0 0 3px rgba(0,255,136,0.4); background: rgba(0,255,136,0.15); border-color: #00ff88 !important; }
         .table-scroll { max-height: 400px; overflow-y: auto; border-radius: 12px; }
         .table-scroll::-webkit-scrollbar { width: 5px; background: #1a1f2e; }
-        .table-scroll::-webkit-scrollbar-thumb { background: #00ff88; border-radius: 10px; }
-        table thead th { position: sticky; top: 0; background: #0f1520; color: #00ff88; font-weight: 700; border-bottom: 1px solid rgba(0,255,136,0.3); }
+        .table-scroll::-webkit-scrollbar-thumb { background: #00ff88; }
+        table thead th { position: sticky; top: 0; background: #0f1520; color: #00ff88; border-bottom: 1px solid rgba(0,255,136,0.3); }
         tr:hover { background-color: rgba(0,255,136,0.08); cursor: pointer; }
         .chart-container { height: 260px; width: 100%; margin-top: 16px; }
-        .toast-notification {
-            position: fixed; bottom: 20px; right: 20px; background: #0f1520; backdrop-filter: blur(10px);
-            padding: 12px 16px; border-radius: 12px; border-left: 4px solid #00ff88;
-            z-index: 1000; animation: slideInRight 0.3s ease-out; max-width: 320px; font-size: 11px;
-        }
-        .toast-notification.eliminada { border-left-color: #f59e0b; }
-        @keyframes slideInRight { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes blink-red { 0%,100%{opacity:1}50%{opacity:0.4}}
-        .siren-red { width: 12px; height: 12px; background: #ef4444; border-radius: 50%; animation: blink-red 1s infinite; display: inline-block; }
-        .logo-shield { background: rgba(15,20,30,0.8); border-radius: 18px; padding: 10px; border: 1px solid #00ff88; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; }
-        .modal-content { background: #0f1520; border-radius: 24px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border: 1px solid #00ff88; padding: 24px; }
-        @media (max-width: 768px) { .filter-group { flex-direction: column; } .filter-group select, .filter-group input { width: 100%; } .stat-card { padding: 8px; } }
+        .resultado-badge { padding: 4px 10px; border-radius: 20px; font-size: 9px; font-weight: 700; }
+        .resultado-op { background: rgba(0,255,136,0.2); color: #00ff88; }
+        .resultado-fs { background: rgba(239,68,68,0.2); color: #f87171; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 1000; animation: fadeIn 0.2s ease-out; }
+        .modal-content { background: #0f1520; border-radius: 24px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; border: 2px solid #00ff88; padding: 24px; animation: bounceIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.95); } 100% { transform: scale(1); opacity: 1; } }
+        .loading-spinner { display: inline-block; width: 20px; height: 20px; border: 2px solid #00ff88; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        @media (max-width: 768px) { .filter-group { flex-direction: column; } .filter-group select, .filter-group input { width: 100%; } }
     </style>
 </head>
 <body>
 <div class="max-w-7xl mx-auto relative z-10">
     <!-- HEADER -->
-    <div class="header-container flex flex-wrap justify-between items-center">
-        <div class="flex items-center gap-4">
-            <div class="logo-shield"><span class="text-2xl">🛠️</span></div>
-            <div><h1 class="text-2xl font-black bg-gradient-to-r from-emerald-400 to-purple-400 bg-clip-text text-transparent">MANTENIMIENTO MINERA</h1><p class="text-xs text-emerald-400">⚙️ ANÁLISIS MULTIDIMENSIONAL · ALERTAS EN VIVO ⚙️</p></div>
-        </div>
-        <div class="flex gap-2">
-            <div class="glass-card px-4 py-2 text-center"><div class="text-[9px] text-emerald-400">📋 TOTAL OTs</div><div id="totalOTs" class="text-2xl font-black">0</div></div>
-            <div class="glass-card px-4 py-2 text-center"><div class="text-[9px] text-purple-400">⏱️ HORAS</div><div id="totalHoras" class="text-2xl font-black">0</div></div>
-            <div class="glass-card px-4 py-2 text-center"><div class="text-[9px] text-sky-400">📊 PROMEDIO</div><div id="avgHoras" class="text-2xl font-black">0</div></div>
-            <button onclick="simularNuevaOT()" class="bg-emerald-600 hover:bg-emerald-500 px-3 py-2 rounded-xl text-xs font-bold">➕ SIMULAR</button>
-        </div>
-    </div>
-
-    <!-- ALERTAS -->
-    <div class="glass-card p-4 mb-6 border-2 border-emerald-500/30">
-        <div class="flex justify-between items-center flex-wrap">
-            <h2 class="font-black text-emerald-400">🔔 ALERTAS (HOY)</h2>
+    <div class="glass-card p-5 mb-6">
+        <div class="flex flex-wrap justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="bg-slate-900 rounded-2xl p-3"><span class="text-2xl">🛠️</span></div>
+                <div><h1 class="text-2xl font-black bg-gradient-to-r from-emerald-400 to-purple-400 bg-clip-text text-transparent">MANTENIMIENTO MINERA</h1><p class="text-xs text-emerald-400">⚙️ DASHBOARD INTERACTIVO · ANÁLISIS POR EQUIPO ⚙️</p></div>
+            </div>
             <div class="flex gap-3">
-                <span class="text-[10px] bg-emerald-900/50 px-2 py-1 rounded-full">🆕 Nuevas: <span id="nuevasCount" class="font-bold">0</span></span>
-                <span class="text-[10px] bg-amber-900/50 px-2 py-1 rounded-full">⚠️ Eliminadas: <span id="eliminadasCount" class="font-bold">0</span></span>
+                <div class="stat-card px-4 py-2"><div class="text-[9px] text-emerald-400">📋 TOTAL OTs</div><div id="totalOTs" class="text-2xl font-black">0</div></div>
+                <div class="stat-card px-4 py-2"><div class="text-[9px] text-purple-400">⏱️ HORAS</div><div id="totalHoras" class="text-2xl font-black">0</div></div>
+                <div class="stat-card px-4 py-2"><div class="text-[9px] text-sky-400">📊 PROMEDIO</div><div id="avgHoras" class="text-2xl font-black">0</div></div>
             </div>
         </div>
-        <div id="alertasContainer" class="max-h-32 overflow-y-auto mt-2 space-y-1 text-[10px]"></div>
     </div>
 
-    <!-- FILTROS AVANZADOS -->
+    <!-- BOTÓN CARGAR DATOS -->
+    <div class="glass-card p-4 mb-6">
+        <div class="flex flex-wrap gap-4 justify-center">
+            <button id="cargarDatosBtn" class="btn-primary text-base px-8 py-3 flex items-center gap-2">📥 CARGAR DATOS</button>
+            <button id="limpiarTodoBtn" class="btn-secondary flex items-center gap-2">🗑️ LIMPIAR FILTROS</button>
+        </div>
+        <div id="statusMsg" class="text-center text-xs mt-2"></div>
+    </div>
+
+    <!-- EQUIPO SELECCIONADO (DESTACADO) -->
+    <div id="equipoSeleccionadoCard" class="glass-card p-4 mb-6 equipo-seleccionado hidden">
+        <div class="flex justify-between items-center flex-wrap">
+            <div><span class="text-slate-400 text-xs">EQUIPO SELECCIONADO</span><div id="equipoNombre" class="text-3xl font-black text-emerald-400">-</div></div>
+            <div class="flex gap-6">
+                <div class="text-center"><div class="text-[10px] text-slate-400">OTs</div><div id="equipoTotalOTs" class="text-2xl font-bold">0</div></div>
+                <div class="text-center"><div class="text-[10px] text-slate-400">Horas</div><div id="equipoTotalHoras" class="text-2xl font-bold">0</div></div>
+                <div class="text-center"><div class="text-[10px] text-slate-400">OP/FS</div><div id="equipoRatio" class="text-2xl font-bold">0/0</div></div>
+            </div>
+            <button id="quitarEquipoBtn" class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl text-xs">✕ QUITAR FILTRO</button>
+        </div>
+    </div>
+
+    <!-- FILTROS -->
     <div class="glass-card p-5 mb-6">
         <div class="filter-group">
             <select id="anioFilter"><option value="todos">📅 TODOS LOS AÑOS</option><option value="2022">2022</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select>
@@ -151,10 +136,15 @@
             </select>
             <select id="equipoFilter"><option value="todos">🚜 TODOS LOS EQUIPOS</option></select>
             <select id="tipoFilter"><option value="todos">🔧 TODOS LOS TIPOS</option></select>
-            <select id="resultadoFilter"><option value="todos">🔄 TODOS LOS RESULTADOS</option><option value="OP">🟢 Operativo (OP)</option><option value="FS">🔴 Fuera Servicio (FS)</option></select>
-            <input type="text" id="searchInput" placeholder="🔍 Buscar por código o palabra...">
-            <button id="limpiarFiltrosBtn" class="bg-slate-700 hover:bg-slate-600 px-4 rounded-xl text-xs">🗑️ LIMPIAR</button>
+            <select id="resultadoFilter"><option value="todos">🔄 TODOS</option><option value="OP">🟢 Operativo</option><option value="FS">🔴 Fuera Servicio</option></select>
         </div>
+        <div class="filter-group">
+            <input type="number" id="horasMin" placeholder="⏱️ Horas MÍN" class="w-32" value="0">
+            <input type="number" id="horasMax" placeholder="⏱️ Horas MÁX" class="w-32" value="100">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar por OT, código o palabra...">
+            <button id="aplicarFiltrosBtn" class="btn-primary">📊 APLICAR FILTROS</button>
+        </div>
+        <div id="resultadoBusqueda" class="text-xs text-slate-400 mt-2 text-center"></div>
     </div>
 
     <!-- TARJETAS ESTADÍSTICAS -->
@@ -165,37 +155,37 @@
         <div class="stat-card"><div class="text-rose-400 text-xs">❌ FUERA SERVICIO (FS)</div><div id="statFS" class="text-2xl font-bold">0</div></div>
     </div>
 
-    <!-- TOP EQUIPOS Y TIPOS REINCIDENTES -->
+    <!-- GRÁFICO DONA (PORCENTAJES) -->
     <div class="grid md:grid-cols-2 gap-6 mb-6">
         <div class="glass-card p-4">
-            <h3 class="font-bold text-emerald-400 mb-3">🚧 TOP 5 EQUIPOS MÁS CRÍTICOS</h3>
-            <div id="topEquiposList" class="space-y-2"></div>
+            <h3 class="font-bold text-emerald-400 mb-2">📊 DISTRIBUCIÓN POR TIPO DE TRABAJO (%)</h3>
+            <div class="chart-container"><canvas id="donaChart"></canvas></div>
         </div>
         <div class="glass-card p-4">
-            <h3 class="font-bold text-purple-400 mb-3">🔄 TOP 5 TIPOS DE TRABAJO REINCIDENTES</h3>
-            <div id="topTiposList" class="space-y-2"></div>
+            <h3 class="font-bold text-emerald-400 mb-2">⏱️ TIEMPO PROMEDIO POR TIPO</h3>
+            <div class="chart-container"><canvas id="timeChart"></canvas></div>
         </div>
     </div>
 
-    <!-- TARJETAS DE TIPOS DE TRABAJO (INTERACTIVAS) -->
+    <!-- EVOLUCIÓN Y TOP EQUIPOS -->
+    <div class="grid md:grid-cols-2 gap-6 mb-6">
+        <div class="glass-card p-4">
+            <h3 class="font-bold text-emerald-400 mb-2">📈 EVOLUCIÓN MENSUAL DE OTs</h3>
+            <div class="chart-container"><canvas id="trendChart"></canvas></div>
+        </div>
+        <div class="glass-card p-4">
+            <h3 class="font-bold text-emerald-400 mb-2">🏆 TOP 10 EQUIPOS + HORAS</h3>
+            <div class="chart-container" style="height: 260px;"><canvas id="topEquiposChart"></canvas></div>
+        </div>
+    </div>
+
+    <!-- TARJETAS DE TIPOS (INTERACTIVAS) -->
     <div class="glass-card p-4 mb-6">
         <div class="flex justify-between items-center mb-3">
-            <h3 class="font-bold text-emerald-400">📊 CLASIFICACIÓN POR TIPO DE TRABAJO</h3>
+            <h3 class="font-bold text-emerald-400">🔧 FILTRAR POR TIPO DE TRABAJO</h3>
             <button id="clearTipoFilterBtn" class="hidden text-xs bg-purple-900/50 px-2 py-1 rounded-full">✕ Quitar filtro</button>
         </div>
         <div id="tiposTrabajoCards" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
-    </div>
-
-    <!-- GRÁFICOS -->
-    <div class="grid md:grid-cols-2 gap-6 mb-6">
-        <div class="glass-card p-4"><h3 class="font-bold text-emerald-400 mb-2">⏱️ TIEMPO POR TIPO DE TRABAJO</h3><div class="chart-container"><canvas id="timeChart"></canvas></div></div>
-        <div class="glass-card p-4"><h3 class="font-bold text-emerald-400 mb-2">📈 EVOLUCIÓN MENSUAL DE OTs</h3><div class="chart-container"><canvas id="trendChart"></canvas></div></div>
-    </div>
-
-    <!-- TOP EQUIPOS POR HORAS -->
-    <div class="glass-card p-4 mb-6">
-        <h3 class="font-bold text-emerald-400 mb-2">🏆 TOP 10 EQUIPOS CON MÁS HORAS DE INTERVENCIÓN</h3>
-        <div class="chart-container" style="height: 300px;"><canvas id="topEquiposChart"></canvas></div>
     </div>
 
     <!-- TABLA DETALLADA -->
@@ -204,13 +194,13 @@
         <div class="table-scroll">
             <table class="w-full text-left text-xs">
                 <thead><tr><th class="p-2">📅 Fecha</th><th>🚜 Equipo</th><th>🔧 Tipo Trabajo</th><th>⏱️ Duración</th><th>🏁 Resultado</th><th>📝 Descripción</th></tr></thead>
-                <tbody id="generalTableBody"></tbody>
+                <tbody id="generalTableBody"><tr><td colspan="6" class="text-center py-8 text-slate-400">⬅️ Presiona "CARGAR DATOS" para comenzar</td></tr></tbody>
             </table>
         </div>
     </div>
 </div>
 
-<!-- MODAL PARA DETALLES -->
+<!-- MODAL CON EFECTO REBOTE Y NAVEGACIÓN -->
 <div id="detailModal" class="modal" style="display: none;">
     <div class="modal-content">
         <div class="flex justify-between items-center mb-4">
@@ -218,81 +208,160 @@
             <button onclick="closeModal()" class="text-2xl text-slate-400 hover:text-white">&times;</button>
         </div>
         <div id="modalContent"></div>
-        <button onclick="closeModal()" class="w-full mt-4 bg-emerald-700 hover:bg-emerald-600 py-2 rounded-xl font-bold">Cerrar</button>
+        <div class="flex justify-between gap-3 mt-4">
+            <button id="btnPrev" onclick="navegarOT(-1)" class="btn-secondary flex-1 py-2">◀ ANTERIOR</button>
+            <span id="modalCounter" class="text-emerald-400 flex items-center">1/1</span>
+            <button id="btnNext" onclick="navegarOT(1)" class="btn-secondary flex-1 py-2">SIGUIENTE ▶</button>
+        </div>
+        <button onclick="closeModal()" class="w-full mt-3 bg-emerald-700 hover:bg-emerald-600 py-2 rounded-xl font-bold">CERRAR</button>
     </div>
 </div>
 
 <script>
-// ==================== DATOS DE PRUEBA ====================
-const DATOS_PRUEBA = [
-    { id: "b70b28c4", nroOt: "OT-0002", equipo: "M444", fecha: "8/4/2022", tipoTrabajo: "Neumático No Programado", resultado: "OP", duracionHoras: 0.75, trabajoRealizado: "Cambio de posc 7 por pinchadura - datos en pañol" },
-    { id: "0515402c", nroOt: "OT-0003", equipo: "M444", fecha: "8/4/2022", tipoTrabajo: "Neumático No Programado", resultado: "OP", duracionHoras: 1.0, trabajoRealizado: "Cambio de posición 8 por pinchadura" },
-    { id: "83718f75", nroOt: "OT-0004", equipo: "M309", fecha: "8/4/2022", tipoTrabajo: "Correctivo Mecánico Chasis", resultado: "FS", duracionHoras: 8.0, trabajoRealizado: "Colocación y torque de bulones" },
-    { id: "fcfbac6f", nroOt: "OT-0005", equipo: "M446", fecha: "17/7/2024", tipoTrabajo: "Correctivo Mecánico Ejes", resultado: "FS", duracionHoras: 8.0, trabajoRealizado: "Desmontaje de posc 7-8" },
-    { id: "aa173499", nroOt: "OT-0006", equipo: "M452", fecha: "22/8/2024", tipoTrabajo: "Mantenimiento Programado", resultado: "OP", duracionHoras: 6.85, trabajoRealizado: "Lavado de equipo más servicio tipo M" },
-    { id: "c1ad4970", nroOt: "OT-0007", equipo: "M305", fecha: "22/8/2024", tipoTrabajo: "Correctivo Transmisión", resultado: "FS", duracionHoras: 7.5, trabajoRealizado: "Desmontaje de PTO por rotura" },
-    { id: "0ad42593", nroOt: "OT-0008", equipo: "M309", fecha: "22/8/2024", tipoTrabajo: "Soldadura Programada", resultado: "OP", duracionHoras: 7.03, trabajoRealizado: "Reparación, soldadura balde back up" },
-    { id: "122d73d1", nroOt: "OT-0009", equipo: "M207", fecha: "22/8/2024", tipoTrabajo: "Neumático Programado", resultado: "OP", duracionHoras: 7.5, trabajoRealizado: "Montaje en posición n 2 reparada" },
-    { id: "d1e41294", nroOt: "OT-0010", equipo: "M207", fecha: "22/8/2024", tipoTrabajo: "Correctivo Eléctrico", resultado: "OP", duracionHoras: 0.48, trabajoRealizado: "Se le reemplazan 2 faros led" },
-    { id: "7d4a2f9e", nroOt: "OT-0011", equipo: "M205", fecha: "22/8/2024", tipoTrabajo: "Correctivo Sistema Hidráulico", resultado: "OP", duracionHoras: 3.1, trabajoRealizado: "Se realiza cambio de mangueras" },
-    { id: "9ccf58b9", nroOt: "OT-0012", equipo: "M309", fecha: "23/8/2024", tipoTrabajo: "Correctivo Motor", resultado: "OP", duracionHoras: 3.02, trabajoRealizado: "Problemas de combustible" },
-    { id: "34fb89cd", nroOt: "OT-0013", equipo: "M305", fecha: "23/8/2024", tipoTrabajo: "Correctivo Motor", resultado: "OP", duracionHoras: 3.0, trabajoRealizado: "Chequeo de pérdida de refrigerante" },
-    { id: "f7d57272", nroOt: "OT-0078", equipo: "M401", fecha: "29/8/2024", tipoTrabajo: "Correctivo Motor", resultado: "OP", duracionHoras: 3.5, trabajoRealizado: "Cambio de cruceta" },
-    { id: "b63ae3b4", nroOt: "OT-0104", equipo: "M456", fecha: "30/8/2024", tipoTrabajo: "Correctivo Sistema Neumático", resultado: "OP", duracionHoras: 0.67, trabajoRealizado: "Torque de bulones" }
-];
+// ==================== CONFIGURACIÓN ====================
+const DATA_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRKuiofQKK-8lO_Y33wjYvT3-pLJ0TGyGo30eDbzPiszx66ysrukXM4KAjFIu7ekxZFR59_722cnu4J/pub?gid=1106016676&single=true&output=csv';
 
 let allData = [];
 let filteredData = [];
-let timeChart = null, trendChart = null, topEquiposChart = null;
-let currentFilters = { anio: 'todos', mes: 'todos', equipo: 'todos', tipo: 'todos', resultado: 'todos', search: '' };
-let currentDate = new Date().toISOString().split('T')[0];
-const STORAGE_KEY = `alertas_${currentDate}`;
+let currentModalIndex = 0;
+let currentModalList = [];
+let donaChart = null, timeChart = null, trendChart = null, topEquiposChart = null;
+
+let currentFilters = {
+    anio: 'todos', mes: 'todos', equipo: 'todos', tipo: 'todos', 
+    resultado: 'todos', search: '', horasMin: 0, horasMax: 100
+};
+
 const resultadoMap = { 'OP': '🟢 Operativo', 'FS': '🔴 Fuera Servicio' };
 
-// ==================== ALERTAS ====================
-function obtenerIdUnico(ot) { return `${ot.id}|${ot.nroOt}`; }
-function showToast(titulo, mensaje, esEliminada = false) {
-    const toast = document.createElement('div');
-    toast.className = `toast-notification ${esEliminada ? 'eliminada' : ''}`;
-    toast.innerHTML = `<strong class="text-xs">${esEliminada ? '⚠️ FALSA ALARMA' : '🔔 NUEVA OT'}</strong><div class="text-[10px] mt-1">${titulo}<br>${mensaje}</div>`;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 5000);
-}
-
-function gestionarAlertas(datosActuales) {
-    const idsActuales = new Set(datosActuales.map(ot => obtenerIdUnico(ot)));
-    const almacenadas = localStorage.getItem(STORAGE_KEY);
-    let idsAlmacenadas = almacenadas ? JSON.parse(almacenadas) : [];
-    const nuevas = datosActuales.filter(ot => !idsAlmacenadas.includes(obtenerIdUnico(ot)));
-    const eliminadas = idsAlmacenadas.filter(id => !idsActuales.has(id));
-    
-    nuevas.forEach(ot => showToast(`${ot.equipo} - ${ot.tipoTrabajo}`, `OT: ${ot.nroOt} · ${ot.fecha}`, false));
-    eliminadas.forEach(id => { const ot = allData.find(o => obtenerIdUnico(o) === id); if(ot) showToast(`OT Eliminada: ${ot.equipo}`, `${ot.nroOt} ya no está en el registro.`, true); });
-    
-    if (nuevas.length || eliminadas.length) localStorage.setItem(STORAGE_KEY, JSON.stringify([...idsActuales]));
-    document.getElementById('nuevasCount').innerText = nuevas.length;
-    document.getElementById('eliminadasCount').innerText = eliminadas.length;
-    const container = document.getElementById('alertasContainer');
-    if (container) {
-        if (nuevas.length === 0 && eliminadas.length === 0) container.innerHTML = '<div class="text-slate-400 text-center py-2">✅ Sin novedades hoy</div>';
-        else {
-            container.innerHTML = '';
-            [...nuevas, ...eliminadas.map(id => ({ tipo: 'eliminada', ot: allData.find(o => obtenerIdUnico(o) === id) })).filter(x => x.ot)].forEach(item => {
-                const ot = item.ot || item;
-                const div = document.createElement('div');
-                div.className = `p-1 rounded ${item.tipo === 'eliminada' ? 'bg-amber-950/30' : 'bg-emerald-950/30'}`;
-                div.innerHTML = `${item.tipo === 'eliminada' ? '⚠️' : '🆕'} ${ot.equipo} - ${ot.tipoTrabajo} (${ot.nroOt})`;
-                container.appendChild(div);
-            });
-        }
-    }
-}
-
-// ==================== FILTRADO ====================
+// ==================== FUNCIONES AUXILIARES ====================
 function obtenerAnio(f) { if(!f) return null; let p = f.split('/'); return p.length>=3 ? parseInt(p[2]) : null; }
 function obtenerMes(f) { if(!f) return null; let p = f.split('/'); return p.length>=2 ? parseInt(p[1]) : null; }
 
+function extraerTipoTrabajo(codigoCompleto) {
+    if (!codigoCompleto) return 'S/Tipo';
+    const match = codigoCompleto.match(/\b(\d{3})\b/);
+    if (match) {
+        const cod = match[1];
+        const tipos = {
+            '320': 'Mantenimiento Programado', '340': 'Correctivo Motor', '341': 'Correctivo Cabina',
+            '342': 'Correctivo Chasis', '343': 'Correctivo Sistema Neumático', '344': 'Correctivo Ejes',
+            '345': 'Correctivo Hidráulico', '349': 'Correctivo Transmisión', '351': 'Correctivo Eléctrico',
+            '352': 'Soldadura', '353': 'Neumático', '322': 'Soldadura Programada',
+            '323': 'Neumático Programado', '325': 'Relleno de Fluidos', '326': 'Cambio Herramientas',
+            '348': 'Correctivo Perforadora', '350': 'Correctivo Mangueras', '390': 'Correctivo Desgaste',
+            '391': 'Espera Logística', '395': 'Chequeo', '397': 'R.L.C.'
+        };
+        return tipos[cod] || `Código ${cod}`;
+    }
+    return 'S/Tipo';
+}
+
+function parseCSVToObjects(csvText) {
+    const lines = csvText.split(/\r?\n/).filter(l => l.trim());
+    if (lines.length < 2) return [];
+    const headers = lines[0].split(',').map(h => h.trim());
+    const data = [];
+    for (let i = 1; i < lines.length; i++) {
+        const values = [];
+        let inQuotes = false, currentVal = '';
+        for (let ch of lines[i]) {
+            if (ch === '"') inQuotes = !inQuotes;
+            else if (ch === ',' && !inQuotes) { values.push(currentVal.trim()); currentVal = ''; }
+            else currentVal += ch;
+        }
+        values.push(currentVal.trim());
+        if (values.length >= headers.length) {
+            const row = {};
+            headers.forEach((h, idx) => { row[h] = values[idx] || ''; });
+            
+            let duracionHoras = 0;
+            if (row['âŒ›H. Fin'] && row['â�³H. inicio'] && row['â�³H. inicio'] !== 'â�³H. inicio') {
+                try {
+                    const startTime = row['â�³H. inicio'].split(':');
+                    const endTime = row['âŒ›H. Fin'].split(':');
+                    if (startTime.length >= 2 && endTime.length >= 2) {
+                        let startMin = parseInt(startTime[0]) * 60 + parseInt(startTime[1]);
+                        let endMin = parseInt(endTime[0]) * 60 + parseInt(endTime[1]);
+                        let diffMin = endMin - startMin;
+                        if (diffMin < 0) diffMin += 24 * 60;
+                        duracionHoras = diffMin / 60;
+                    }
+                } catch(e) { duracionHoras = 0; }
+            }
+            
+            let resultadoRaw = (row['ðŸš¦OP-FS-EP-LT'] || '').trim();
+            let resultadoCode = 'OTRO';
+            if (resultadoRaw.includes('OP')) resultadoCode = 'OP';
+            else if (resultadoRaw.includes('FS')) resultadoCode = 'FS';
+            
+            data.push({
+                id: row['ID_Equipos'] || `ot_${i}`,
+                nroOt: row['ðŸ†”OT NÂ°'] || '',
+                equipo: row['ðŸšœEquipo'] || 'N/E',
+                fecha: row['ðŸ“…Fecha'] || '',
+                tipoTrabajo: extraerTipoTrabajo(row['ðŸ”¢Detalle_Codigo_Completo'] || ''),
+                resultado: resultadoCode,
+                duracionHoras: duracionHoras,
+                trabajoRealizado: row['ðŸ“Trabajo realizado'] || '',
+                interventores: row['ðŸ‘·Interventor'] || ''
+            });
+        }
+    }
+    return data;
+}
+
+async function cargarDatos() {
+    const btn = document.getElementById('cargarDatosBtn');
+    const statusMsg = document.getElementById('statusMsg');
+    
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading-spinner"></span> CARGANDO...';
+    statusMsg.innerHTML = '🔄 Descargando datos desde Google Sheets...';
+    statusMsg.className = 'text-center text-xs text-emerald-400 mt-2';
+    
+    try {
+        const response = await fetch(DATA_URL + '&t=' + Date.now());
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const csvText = await response.text();
+        allData = parseCSVToObjects(csvText);
+        
+        statusMsg.innerHTML = `✅ ¡Cargados ${allData.length} registros!`;
+        setTimeout(() => statusMsg.innerHTML = '', 2000);
+        
+        // Actualizar selects
+        const equipos = [...new Set(allData.map(d => d.equipo).filter(e => e && e !== 'N/E'))].sort();
+        const eqSelect = document.getElementById('equipoFilter');
+        eqSelect.innerHTML = '<option value="todos">🚜 TODOS LOS EQUIPOS</option>';
+        equipos.forEach(eq => eqSelect.innerHTML += `<option value="${eq}">🚜 ${eq}</option>`);
+        
+        const tipos = [...new Set(allData.map(d => d.tipoTrabajo).filter(t => t && t !== 'S/Tipo'))].sort();
+        const tpSelect = document.getElementById('tipoFilter');
+        tpSelect.innerHTML = '<option value="todos">🔧 TODOS LOS TIPOS</option>';
+        tipos.forEach(t => tpSelect.innerHTML += `<option value="${t}">🔧 ${t}</option>`);
+        
+        aplicarFiltros();
+        
+    } catch (error) {
+        console.error(error);
+        statusMsg.innerHTML = `❌ Error al cargar: ${error.message}`;
+        statusMsg.className = 'text-center text-xs text-red-400 mt-2';
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '📥 CARGAR DATOS';
+    }
+}
+
 function aplicarFiltros() {
+    if (!allData.length) {
+        filteredData = [];
+        actualizarUI();
+        return;
+    }
+    
+    const horasMin = parseFloat(document.getElementById('horasMin').value) || 0;
+    const horasMax = parseFloat(document.getElementById('horasMax').value) || 999;
+    
     filteredData = allData.filter(d => {
         const anio = obtenerAnio(d.fecha);
         const mes = obtenerMes(d.fecha);
@@ -301,6 +370,7 @@ function aplicarFiltros() {
         if (currentFilters.equipo !== 'todos' && d.equipo !== currentFilters.equipo) return false;
         if (currentFilters.tipo !== 'todos' && d.tipoTrabajo !== currentFilters.tipo) return false;
         if (currentFilters.resultado !== 'todos' && d.resultado !== currentFilters.resultado) return false;
+        if (d.duracionHoras < horasMin || d.duracionHoras > horasMax) return false;
         if (currentFilters.search) {
             const searchLower = currentFilters.search.toLowerCase();
             return d.nroOt.toLowerCase().includes(searchLower) || 
@@ -309,7 +379,23 @@ function aplicarFiltros() {
         }
         return true;
     });
+    
+    // Actualizar card de equipo seleccionado
+    if (currentFilters.equipo !== 'todos') {
+        const equipoData = filteredData;
+        document.getElementById('equipoSeleccionadoCard').classList.remove('hidden');
+        document.getElementById('equipoNombre').innerHTML = currentFilters.equipo;
+        document.getElementById('equipoTotalOTs').innerHTML = equipoData.length;
+        document.getElementById('equipoTotalHoras').innerHTML = equipoData.reduce((s,d) => s + d.duracionHoras, 0).toFixed(0);
+        const opCount = equipoData.filter(d => d.resultado === 'OP').length;
+        const fsCount = equipoData.filter(d => d.resultado === 'FS').length;
+        document.getElementById('equipoRatio').innerHTML = `${opCount}/${fsCount}`;
+    } else {
+        document.getElementById('equipoSeleccionadoCard').classList.add('hidden');
+    }
+    
     actualizarUI();
+    document.getElementById('resultadoBusqueda').innerHTML = `🔍 Se encontraron ${filteredData.length} resultados`;
 }
 
 function actualizarUI() {
@@ -323,19 +409,58 @@ function actualizarUI() {
     document.getElementById('statOP').innerText = filteredData.filter(d => d.resultado === 'OP').length;
     document.getElementById('statFS').innerText = filteredData.filter(d => d.resultado === 'FS').length;
     
-    // Top equipos
-    const equiposCount = {}; filteredData.forEach(d => equiposCount[d.equipo] = (equiposCount[d.equipo] || 0) + 1);
-    const topEquipos = Object.entries(equiposCount).sort((a,b) => b[1] - a[1]).slice(0,5);
-    document.getElementById('topEquiposList').innerHTML = topEquipos.map(([eq, c]) => `<div class="flex justify-between items-center p-2 bg-slate-800/30 rounded-lg"><span>🚜 ${eq}</span><span class="text-emerald-400 font-bold">${c} OTs</span></div>`).join('');
-    
-    // Top tipos
-    const tiposCount = {}; filteredData.forEach(d => tiposCount[d.tipoTrabajo] = (tiposCount[d.tipoTrabajo] || 0) + 1);
-    const topTipos = Object.entries(tiposCount).sort((a,b) => b[1] - a[1]).slice(0,5);
-    document.getElementById('topTiposList').innerHTML = topTipos.map(([t, c]) => `<div class="flex justify-between items-center p-2 bg-slate-800/30 rounded-lg"><span>🔧 ${t}</span><span class="text-purple-400 font-bold">${c} OTs</span></div>`).join('');
-    
-    actualizarTarjetasTipos();
     actualizarGraficos();
+    actualizarTarjetasTipos();
     actualizarTabla();
+}
+
+function actualizarGraficos() {
+    if (!filteredData.length) {
+        if (donaChart) donaChart.destroy();
+        if (timeChart) timeChart.destroy();
+        if (trendChart) trendChart.destroy();
+        if (topEquiposChart) topEquiposChart.destroy();
+        return;
+    }
+    
+    // GRÁFICO DONA (porcentajes)
+    const tiposCount = {};
+    filteredData.forEach(d => tiposCount[d.tipoTrabajo] = (tiposCount[d.tipoTrabajo] || 0) + 1);
+    const donaData = Object.entries(tiposCount).sort((a,b) => b[1] - a[1]).slice(0,8);
+    if (donaChart) donaChart.destroy();
+    donaChart = new Chart(document.getElementById('donaChart'), {
+        type: 'doughnut',
+        data: { labels: donaData.map(([t]) => t.length>20 ? t.substring(0,17)+'..' : t), datasets: [{ data: donaData.map(([,c]) => c), backgroundColor: ['#00ff88', '#c084fc', '#38bdf8', '#fbbf24', '#f97316', '#ef4444', '#ec4899', '#06b6d4'], borderWidth: 2, borderColor: '#0f1520' }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { size: 9 } } }, tooltip: { callbacks: { label: (ctx) => { let total = ctx.dataset.data.reduce((a,b)=>a+b,0); let pct = Math.round(ctx.parsed / total * 100); return `${ctx.label}: ${ctx.parsed} (${pct}%)`; } } } }, cutout: '55%' }
+    });
+    
+    // TIEMPO POR TIPO
+    const tiposTime = {}; filteredData.forEach(d => tiposTime[d.tipoTrabajo] = (tiposTime[d.tipoTrabajo] || 0) + d.duracionHoras);
+    const timeData = Object.entries(tiposTime).sort((a,b) => b[1] - a[1]).slice(0,8);
+    if (timeChart) timeChart.destroy();
+    timeChart = new Chart(document.getElementById('timeChart'), {
+        type: 'bar', data: { labels: timeData.map(([t]) => t.length>15 ? t.substring(0,12)+'..' : t), datasets: [{ label: 'Horas', data: timeData.map(([,h]) => h.toFixed(1)), backgroundColor: '#00ff88', borderRadius: 8 }] },
+        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, title: { display: true, text: 'Horas', color: '#cbd5e1' } } } }
+    });
+    
+    // EVOLUCIÓN MENSUAL
+    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    let otsPorMes = new Array(12).fill(0);
+    filteredData.forEach(d => { const mes = obtenerMes(d.fecha); if(mes && mes>=1 && mes<=12) otsPorMes[mes-1]++; });
+    if (trendChart) trendChart.destroy();
+    trendChart = new Chart(document.getElementById('trendChart'), {
+        type: 'line', data: { labels: meses, datasets: [{ label: 'Cantidad OTs', data: otsPorMes, borderColor: '#c084fc', backgroundColor: 'rgba(192,132,252,0.05)', borderWidth: 3, fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: '#c084fc' }] },
+        options: { responsive: true, maintainAspectRatio: true }
+    });
+    
+    // TOP EQUIPOS POR HORAS
+    const equiposHoras = {}; filteredData.forEach(d => equiposHoras[d.equipo] = (equiposHoras[d.equipo] || 0) + d.duracionHoras);
+    const topEquipos = Object.entries(equiposHoras).sort((a,b) => b[1] - a[1]).slice(0,10);
+    if (topEquiposChart) topEquiposChart.destroy();
+    topEquiposChart = new Chart(document.getElementById('topEquiposChart'), {
+        type: 'bar', data: { labels: topEquipos.map(([e]) => e), datasets: [{ label: 'Horas', data: topEquipos.map(([,h]) => h.toFixed(1)), backgroundColor: '#ffaa44', borderRadius: 8 }] },
+        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, title: { display: true, text: 'Horas', color: '#cbd5e1' } } } }
+    });
 }
 
 function actualizarTarjetasTipos() {
@@ -347,7 +472,7 @@ function actualizarTarjetasTipos() {
         const pct = Math.round(count / total * 100);
         const div = document.createElement('div');
         div.className = `category-card ${currentFilters.tipo === tipo ? 'active' : ''}`;
-        div.innerHTML = `<div class="text-lg">🔧</div><div class="text-[10px] font-bold mt-1">${tipo.length > 22 ? tipo.substring(0,20)+'..' : tipo}</div><div class="text-xl font-black text-emerald-400">${count}</div><div class="text-[9px] text-slate-400">${pct}%</div>`;
+        div.innerHTML = `<div class="text-lg">🔧</div><div class="text-[9px] font-bold mt-1">${tipo.length > 22 ? tipo.substring(0,20)+'..' : tipo}</div><div class="text-xl font-black text-emerald-400">${count}</div><div class="text-[9px] text-slate-400">${pct}%</div>`;
         div.onclick = () => {
             if (currentFilters.tipo === tipo) {
                 currentFilters.tipo = 'todos';
@@ -364,126 +489,97 @@ function actualizarTarjetasTipos() {
     });
 }
 
-function actualizarGraficos() {
-    // Tiempo por tipo
-    const tiposTime = {}; filteredData.forEach(d => tiposTime[d.tipoTrabajo] = (tiposTime[d.tipoTrabajo] || 0) + d.duracionHoras);
-    const sorted = Object.entries(tiposTime).sort((a,b) => b[1] - a[1]).slice(0,8);
-    if (timeChart) timeChart.destroy();
-    timeChart = new Chart(document.getElementById('timeChart'), {
-        type: 'bar', data: { labels: sorted.map(([t]) => t.length>15 ? t.substring(0,12)+'..' : t), datasets: [{ label: 'Horas', data: sorted.map(([,h]) => h.toFixed(1)), backgroundColor: '#00ff88' }] },
-        options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }
-    });
-    
-    // Evolución mensual
-    const meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-    let otsPorMes = new Array(12).fill(0);
-    filteredData.forEach(d => { const mes = obtenerMes(d.fecha); if(mes && mes>=1 && mes<=12) otsPorMes[mes-1]++; });
-    if (trendChart) trendChart.destroy();
-    trendChart = new Chart(document.getElementById('trendChart'), {
-        type: 'line', data: { labels: meses, datasets: [{ label: 'Cantidad OTs', data: otsPorMes, borderColor: '#c084fc', backgroundColor: 'rgba(192,132,252,0.05)', fill: true, tension: 0.3 }] },
-        options: { responsive: true, maintainAspectRatio: true }
-    });
-    
-    // Top equipos por horas
-    const equiposHoras = {}; filteredData.forEach(d => equiposHoras[d.equipo] = (equiposHoras[d.equipo] || 0) + d.duracionHoras);
-    const topEquipos = Object.entries(equiposHoras).sort((a,b) => b[1] - a[1]).slice(0,10);
-    if (topEquiposChart) topEquiposChart.destroy();
-    topEquiposChart = new Chart(document.getElementById('topEquiposChart'), {
-        type: 'bar', data: { labels: topEquipos.map(([e]) => e), datasets: [{ label: 'Horas', data: topEquipos.map(([,h]) => h.toFixed(1)), backgroundColor: '#ffaa44' }] },
-        options: { indexAxis: 'y', responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
-    });
-}
-
 function actualizarTabla() {
     const tbody = document.getElementById('generalTableBody');
     tbody.innerHTML = '';
-    filteredData.slice(0,150).forEach(ot => {
+    if (!filteredData.length) {
+        tbody.innerHTML = '<tr><td colspan="6" class="text-center py-8 text-slate-400">No hay datos para los filtros seleccionados</td></tr>';
+        return;
+    }
+    filteredData.slice(0,150).forEach((ot, idx) => {
         const row = tbody.insertRow();
-        row.onclick = () => abrirModal(ot);
+        row.onclick = () => abrirModalConLista(filteredData, idx);
         row.insertCell(0).innerHTML = `📅 ${ot.fecha || '-'}`;
         row.insertCell(1).innerHTML = `🚜 ${ot.equipo}`;
         row.insertCell(2).innerHTML = `<span class="px-1 py-0.5 rounded bg-emerald-900/60 text-emerald-400 text-[9px]">${ot.tipoTrabajo}</span>`;
         row.insertCell(3).innerHTML = `⏱️ ${ot.duracionHoras.toFixed(1)} h`;
-        row.insertCell(4).innerHTML = resultadoMap[ot.resultado] || ot.resultado;
+        row.insertCell(4).innerHTML = `<span class="resultado-badge ${ot.resultado === 'OP' ? 'resultado-op' : 'resultado-fs'}">${resultadoMap[ot.resultado] || ot.resultado}</span>`;
         row.insertCell(5).innerHTML = (ot.trabajoRealizado || '-').substring(0, 55);
     });
 }
 
-function abrirModal(ot) {
+function abrirModalConLista(lista, index) {
+    currentModalList = lista;
+    currentModalIndex = index;
+    mostrarModalActual();
     const modal = document.getElementById('detailModal');
+    modal.style.display = 'flex';
+}
+
+function mostrarModalActual() {
+    const ot = currentModalList[currentModalIndex];
     const content = document.getElementById('modalContent');
     content.innerHTML = `
         <div class="space-y-3 text-sm">
-            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🔢 N° OT:</span><span class="font-mono text-emerald-400">${ot.nroOt}</span></div>
+            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🔢 N° OT:</span><span class="font-mono text-emerald-400 font-bold">${ot.nroOt || '-'}</span></div>
             <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">📅 Fecha:</span><span>${ot.fecha || '-'}</span></div>
-            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🚜 Equipo:</span><span class="font-bold">${ot.equipo}</span></div>
+            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🚜 Equipo:</span><span class="font-bold text-emerald-400">${ot.equipo}</span></div>
             <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🔧 Tipo Trabajo:</span><span>${ot.tipoTrabajo}</span></div>
-            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">⏱️ Duración:</span><span>${ot.duracionHoras.toFixed(2)} horas</span></div>
-            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🏁 Resultado:</span><span>${resultadoMap[ot.resultado] || ot.resultado}</span></div>
+            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">⏱️ Duración:</span><span class="font-bold">${ot.duracionHoras.toFixed(2)} horas</span></div>
+            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">🏁 Resultado:</span><span class="${ot.resultado === 'OP' ? 'text-emerald-400' : 'text-rose-400'} font-bold">${resultadoMap[ot.resultado] || ot.resultado}</span></div>
+            <div class="grid grid-cols-2 gap-2 p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">👥 Interventores:</span><span>${ot.interventores || '-'}</span></div>
             <div class="p-2 bg-slate-800/50 rounded-lg"><span class="text-slate-400">📝 Trabajo Realizado:</span><div class="mt-1 text-slate-300">${ot.trabajoRealizado || 'No especificado'}</div></div>
         </div>
     `;
-    modal.style.display = 'flex';
+    document.getElementById('modalCounter').innerHTML = `${currentModalIndex+1}/${currentModalList.length}`;
+    document.getElementById('btnPrev').disabled = currentModalIndex === 0;
+    document.getElementById('btnNext').disabled = currentModalIndex === currentModalList.length - 1;
+}
+
+function navegarOT(direccion) {
+    const nuevoIndex = currentModalIndex + direccion;
+    if (nuevoIndex >= 0 && nuevoIndex < currentModalList.length) {
+        currentModalIndex = nuevoIndex;
+        mostrarModalActual();
+    }
 }
 
 function closeModal() { document.getElementById('detailModal').style.display = 'none'; }
 
-function clearTipoFilter() {
-    currentFilters.tipo = 'todos';
-    document.getElementById('tipoFilter').value = 'todos';
-    document.getElementById('clearTipoFilterBtn').classList.add('hidden');
-    aplicarFiltros();
-}
-
 function limpiarTodosFiltros() {
-    currentFilters = { anio: 'todos', mes: 'todos', equipo: 'todos', tipo: 'todos', resultado: 'todos', search: '' };
+    currentFilters = { anio: 'todos', mes: 'todos', equipo: 'todos', tipo: 'todos', resultado: 'todos', search: '', horasMin: 0, horasMax: 100 };
     document.getElementById('anioFilter').value = 'todos';
     document.getElementById('mesFilter').value = 'todos';
     document.getElementById('equipoFilter').value = 'todos';
     document.getElementById('tipoFilter').value = 'todos';
     document.getElementById('resultadoFilter').value = 'todos';
     document.getElementById('searchInput').value = '';
+    document.getElementById('horasMin').value = '0';
+    document.getElementById('horasMax').value = '100';
     document.getElementById('clearTipoFilterBtn').classList.add('hidden');
+    document.getElementById('equipoSeleccionadoCard').classList.add('hidden');
     aplicarFiltros();
 }
 
-let contadorSim = 100;
-function simularNuevaOT() {
-    contadorSim++;
-    const nueva = {
-        id: `sim_${contadorSim}`, nroOt: `OT-SIM-${contadorSim}`, equipo: "M999",
-        fecha: new Date().toLocaleDateString('es-AR'), tipoTrabajo: "Correctivo Motor",
-        resultado: "OP", duracionHoras: 2.5, trabajoRealizado: "SIMULACIÓN - Nueva orden de trabajo ingresada al sistema"
-    };
-    allData.unshift(nueva);
-    gestionarAlertas(allData);
+// EVENTOS
+document.getElementById('cargarDatosBtn').addEventListener('click', cargarDatos);
+document.getElementById('limpiarTodoBtn').addEventListener('click', limpiarTodosFiltros);
+document.getElementById('aplicarFiltrosBtn').addEventListener('click', () => aplicarFiltros());
+document.getElementById('quitarEquipoBtn').addEventListener('click', () => {
+    currentFilters.equipo = 'todos';
+    document.getElementById('equipoFilter').value = 'todos';
+    document.getElementById('equipoSeleccionadoCard').classList.add('hidden');
     aplicarFiltros();
-    showToast(`⚠️ SIMULACIÓN`, `Se agregó OT ${nueva.nroOt} al sistema.`, false);
-}
-
-function cargarDatos() {
-    allData = [...DATOS_PRUEBA];
-    const equipos = [...new Set(allData.map(d => d.equipo))].sort();
-    const eqSelect = document.getElementById('equipoFilter');
-    eqSelect.innerHTML = '<option value="todos">🚜 TODOS LOS EQUIPOS</option>';
-    equipos.forEach(eq => eqSelect.innerHTML += `<option value="${eq}">🚜 ${eq}</option>`);
-    const tipos = [...new Set(allData.map(d => d.tipoTrabajo))].sort();
-    const tpSelect = document.getElementById('tipoFilter');
-    tpSelect.innerHTML = '<option value="todos">🔧 TODOS LOS TIPOS</option>';
-    tipos.forEach(t => tpSelect.innerHTML += `<option value="${t}">🔧 ${t}</option>`);
-    gestionarAlertas(allData);
-    aplicarFiltros();
-}
-
-// Event listeners
+});
 document.getElementById('anioFilter').addEventListener('change', e => { currentFilters.anio = e.target.value; aplicarFiltros(); });
 document.getElementById('mesFilter').addEventListener('change', e => { currentFilters.mes = e.target.value; aplicarFiltros(); });
 document.getElementById('equipoFilter').addEventListener('change', e => { currentFilters.equipo = e.target.value; aplicarFiltros(); });
 document.getElementById('tipoFilter').addEventListener('change', e => { currentFilters.tipo = e.target.value; if(currentFilters.tipo === 'todos') document.getElementById('clearTipoFilterBtn').classList.add('hidden'); else document.getElementById('clearTipoFilterBtn').classList.remove('hidden'); aplicarFiltros(); });
 document.getElementById('resultadoFilter').addEventListener('change', e => { currentFilters.resultado = e.target.value; aplicarFiltros(); });
-document.getElementById('searchInput').addEventListener('input', e => { currentFilters.search = e.target.value; aplicarFiltros(); });
-document.getElementById('limpiarFiltrosBtn').addEventListener('click', limpiarTodosFiltros);
-window.onload = cargarDatos;
+document.getElementById('searchInput').addEventListener('keypress', e => { if(e.key === 'Enter') { currentFilters.search = e.target.value; aplicarFiltros(); } });
+document.getElementById('clearTipoFilterBtn').addEventListener('click', () => { currentFilters.tipo = 'todos'; document.getElementById('tipoFilter').value = 'todos'; document.getElementById('clearTipoFilterBtn').classList.add('hidden'); aplicarFiltros(); });
+
+window.onload = () => { cargarDatos(); };
 </script>
 </body>
 </html>
